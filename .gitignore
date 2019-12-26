@@ -1,3 +1,5 @@
+/cacli/bin
+/cacli/cacli
 /config*.yaml
 model*
 exported_buckets
