@@ -22,8 +22,7 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/cloud-annotations/training/cacli/cmd/update"
 	"github.com/spf13/cobra"
 )
 
@@ -32,9 +31,7 @@ var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Comming soon",
 	Long:  `Comming soon`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("This command is not yet available.")
-	},
+	Run:   update.Run,
 }
 
 func init() {
