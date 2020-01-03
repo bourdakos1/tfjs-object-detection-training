@@ -1,42 +1,25 @@
 package update
 
 import (
-	"io"
-	"net/http"
-	"os"
+	"fmt"
+	"os/exec"
 
+	"github.com/cloud-annotations/training/cacli/e"
 	"github.com/spf13/cobra"
 )
 
 func Run(cmd *cobra.Command, args []string) {
-	os.Rename("cacli", "cacli-old")
-	os.Remove("./cacli-old")
-	fileurl := "https://github.com/cloud-annotations/training/releases/download/v1.2.22/cacli_darwin_x86_64"
-	if err := downloadFile("./cacli", fileurl); err != nil {
-		panic(err)
-	}
-	os.Chmod("./cacli", 0700)
-}
+	fmt.Println(buildDownloadURL())
 
-// DownloadFile will download a url to a local file. It's efficient because it will
-// write as it downloads and not load the whole file into memory.
-func downloadFile(filepath string, url string) error {
-
-	// Get the data
-	resp, err := http.Get(url)
+	out, err := exec.Command("which", "cacli").Output()
 	if err != nil {
-		return err
+		e.Exit(err)
 	}
-	defer resp.Body.Close()
 
-	// Create the file
-	out, err := os.Create(filepath)
-	if err != nil {
-		return err
-	}
-	defer out.Close()
+	output := string(out)
+	fmt.Println(output)
 
-	// Write the body to file
-	_, err = io.Copy(out, resp.Body)
-	return err
+	// os.Rename("/usr/local/bin/cacli", "/usr/local/bin/cacli-old")
+	// os.Remove("/usr/local/bin/cacli-old")
+	// os.Rename("./cacli", "/usr/local/bin/cacli")
 }
